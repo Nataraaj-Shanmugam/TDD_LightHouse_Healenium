@@ -21,6 +21,13 @@ public class LoggerUtility {
     }
 
     /**
+     * Default constructor for {@link LoggerUtility}.
+     * Initializes a new instance of this class with default settings.
+     */
+    public LoggerUtility() {
+    }
+
+    /**
      * Initializes Log4j configuration with a custom layout and console appender.
      * This method configures a console appender with a specific pattern layout
      * and attaches it to a logger configuration, which is then used by the Log4j context.
@@ -48,6 +55,14 @@ public class LoggerUtility {
         ctx.updateLoggers(config);
     }
 
+    /**
+     * Retrieves a Logger instance for a given class.
+     * This method provides a centralized way to obtain a logger from the LogManager,
+     * ensuring consistent logging behavior across the application.
+     *
+     * @param clazz The class for which the logger is to be obtained.
+     * @return A Logger instance associated with the specified class.
+     */
     public static Logger getLogger(Class<?> clazz) {
         return LogManager.getLogger(clazz);
     }

@@ -34,6 +34,12 @@ import java.util.*;
 
 public class GenericKeywords extends ThreadLocalFunctionalities implements GenericKeywordsInterface {
 
+	/**
+	 * Default constructor for {@link GenericKeywords}.
+	 * Initializes a new instance of this class with default settings.
+	 */
+	public GenericKeywords() {
+	}
 
 	/**
 	 * A list that stores the names of test scenarios that have failed during test execution.
@@ -126,6 +132,7 @@ public class GenericKeywords extends ThreadLocalFunctionalities implements Gener
 	 * @param customWebElement The CustomWebElement where text will be entered.
 	 * @param value            The text to be entered.
 	 */
+	@Override
 	public void inputTextWithActions(CustomWebElement customWebElement, String value) {
 		ReporterUtilities.log("Entering " + value + " in " + customWebElement.getName(), () -> {
 			try {
@@ -740,7 +747,6 @@ public class GenericKeywords extends ThreadLocalFunctionalities implements Gener
 	 * Loads a property file from the specified file path and populates the 'propFile' object.
 	 *
 	 * @param filePath The path to the property file to load.
-	 * @throws ProjectCustomException If there is an exception while loading the property file.
 	 */
 	public void loadPropertyFile(String filePath) {
 		try {

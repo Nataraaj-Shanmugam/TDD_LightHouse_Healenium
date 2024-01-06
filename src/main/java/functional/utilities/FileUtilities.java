@@ -10,6 +10,13 @@ import functional.genericKeywords.ProjectCustomException;
  * Extends the GenericKeywords class for additional utility functionalities.
  */
 public class FileUtilities extends GenericKeywords {
+	/**
+	 * Default constructor for {@link FileUtilities}.
+	 * Initializes a new instance of this class with default settings.
+	 */
+	public FileUtilities() {
+	}
+
 
 	/**
 	 * Renames a file from one name and extension to another.

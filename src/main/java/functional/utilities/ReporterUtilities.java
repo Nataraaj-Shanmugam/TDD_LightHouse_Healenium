@@ -17,6 +17,14 @@ import static io.qameta.allure.Allure.step;
  * framework and Log4j for logging.
  */
 public class ReporterUtilities {
+
+    /**
+     * Default constructor for {@link ReporterUtilities}.
+     * Initializes a new instance of this class with default settings.
+     */
+    public ReporterUtilities() {
+    }
+
     private static final Logger logger = LoggerUtility.getLogger(ReporterUtilities.class);
 
     /**

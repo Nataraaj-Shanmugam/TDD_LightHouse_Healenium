@@ -15,6 +15,15 @@ import java.lang.reflect.Method;
  */
 public class DataProviderTransformer implements IAnnotationTransformer {
 
+
+    /**
+     * Default constructor for DataProviderTransformer.
+     * Initializes a new instance of this class with default settings.
+     */
+    public DataProviderTransformer() {
+    }
+
+    @Override
     /**
      * Transforms TestNG annotations at runtime. This method is invoked by TestNG
      * to give you a chance to modify the annotation behavior for test methods.
@@ -24,7 +33,6 @@ public class DataProviderTransformer implements IAnnotationTransformer {
      * @param testConstructor The constructor of the test class. May be null.
      * @param testMethod The test method that is being annotated. May be null.
      */
-    @Override
     public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {
         if(testMethod.isAnnotationPresent(TestDataAnnotation.class) && !testMethod.getAnnotation(TestDataAnnotation.class).isNoDataProvider()){
             // Set the data provider to 'customDataProvider' if 'isNoDataProvider' is false

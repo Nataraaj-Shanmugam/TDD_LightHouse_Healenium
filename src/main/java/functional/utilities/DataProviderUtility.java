@@ -29,6 +29,12 @@ import java.util.stream.Collectors;
 public class DataProviderUtility {
 
 
+    /**
+     * Default constructor for {@link DataProviderUtility}.
+     * Initializes a new instance of this class with default settings.
+     */
+    public DataProviderUtility() {
+    }
     static HashMap<String, HashMap<String, HashMap<String, Integer>>> eachSheetHeaderData = new HashMap<>();
     static HashMap<String, HashMap<String, List<List<Object>>>> eachSheetTestData = new HashMap<>();
 
@@ -89,7 +95,12 @@ public class DataProviderUtility {
      */
     protected static class GoogleSheet {
 
-
+        /**
+         * Default constructor for {@link GoogleSheet}.
+         * Initializes a new instance of this class with default settings.
+         */
+        public GoogleSheet() {
+        }
         private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
         /**

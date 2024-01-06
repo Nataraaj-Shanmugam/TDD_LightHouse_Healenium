@@ -15,6 +15,13 @@ import java.util.Random;
 public class LighthouseUtil {
 
     /**
+     * Default constructor for {@link LighthouseUtil}.
+     * Initializes a new instance of this class with default settings.
+     */
+    public LighthouseUtil() {
+    }
+
+    /**
      * Finds a free network port within a specified range.
      *
      * @return An available port number between 50000 and 60000.

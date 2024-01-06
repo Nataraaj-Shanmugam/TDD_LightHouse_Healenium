@@ -14,6 +14,13 @@ import org.openqa.selenium.WebDriver;
  */
 public class ThreadLocalFunctionalities {
 
+	/**
+	 * Default constructor for {@link ThreadLocalFunctionalities}.
+	 * Initializes a new instance of this class with default settings.
+	 */
+	public ThreadLocalFunctionalities() {
+	}
+
 	/** Thread Local WebDriver instance */
 	protected static ThreadLocal<WebDriver> threadDriverInstance = new ThreadLocal<>();
 

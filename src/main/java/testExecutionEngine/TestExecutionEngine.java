@@ -21,6 +21,17 @@ import java.util.*;
  */
 public class TestExecutionEngine extends GenericKeywords {
 
+	/**
+	 * Default constructor for {@link TestExecutionEngine}.
+	 * Initializes a new instance of this class with default settings.
+	 */
+	public TestExecutionEngine() {
+	}
+
+	/**
+	 * A globally accessible instance of the GenericKeywords class.
+	 * This instance is used to access functionalities provided by the GenericKeywords class.
+	 */
 	public static final GenericKeywords genericKeywords = new GenericKeywords();
 
 	/**
