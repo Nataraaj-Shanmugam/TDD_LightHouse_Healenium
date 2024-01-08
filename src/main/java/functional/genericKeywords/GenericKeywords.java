@@ -14,6 +14,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -21,6 +23,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -191,7 +195,11 @@ public class GenericKeywords extends ThreadLocalFunctionalities implements Gener
 					// Create a ChromeDriver instance with the configured capabilities.
 					webDriver = new ChromeDriver(((ChromeOptions) capabilities));
 				} else {
-					// Code for remote execution
+					try {
+						webDriver = new RemoteWebDriver(new URL(getPropertyValue("gridHubUrl")), new ChromeOptions());
+					} catch (MalformedURLException e) {
+						e.printStackTrace();
+					}
 				}
 				break;
 			case "Firefox":
@@ -208,7 +216,11 @@ public class GenericKeywords extends ThreadLocalFunctionalities implements Gener
 					// Create a FirefoxDriver instance with the configured capabilities.
 					webDriver = new FirefoxDriver(((FirefoxOptions) capabilities));
 				} else {
-					// Code for remote execution
+					try {
+						webDriver = new RemoteWebDriver(new URL(getPropertyValue("gridHubUrl")), new FirefoxOptions());
+					} catch (MalformedURLException e) {
+						e.printStackTrace();
+					}
 				}
 				break;
 			case "Edge":

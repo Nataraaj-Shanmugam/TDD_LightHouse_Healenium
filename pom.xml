@@ -21,11 +21,12 @@
 		<common-lang3>3.14.0</common-lang3>
 		<common-io>2.15.1</common-io>
 		<allure>2.25.0</allure>
-		<maven-surfire>3.2.3</maven-surfire>
+		<maven-surfire>2.14.1</maven-surfire>
 		<aspectj>1.9.21</aspectj>
 		<log4j>3.0.0-beta1</log4j>
 		<healenium>3.4.8</healenium>
 		<maven-javadoc>3.6.3</maven-javadoc>
+		<jacoco>0.8.11</jacoco>
 	</properties>
 
 
@@ -40,6 +41,32 @@
 			</resource>
 		</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco}</version>
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<append>true</append>
+					<destFile>${sonar.jacoco.reportPath}</destFile>
+					<propertyName>surefireArgLine</propertyName>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -62,10 +89,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven-surfire}</version>
 				<configuration>
-					<testFailureIgnore>true</testFailureIgnore>
-					<argLine>
-						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj}/aspectjweaver-${aspectj}.jar"
-					</argLine>
+					<argLine>${surefireArgLine} -Xmx1024m -noverify -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj}/aspectjweaver-${aspectj}.jar"</argLine>
 					<suiteXmlFiles>
 						<suiteXmlFile>src/test/resources/TestXML/testng.xml</suiteXmlFile>
 					</suiteXmlFiles>

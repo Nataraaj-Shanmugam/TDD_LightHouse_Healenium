@@ -38,6 +38,7 @@ public class DataProviderUtility {
     static HashMap<String, HashMap<String, HashMap<String, Integer>>> eachSheetHeaderData = new HashMap<>();
     static HashMap<String, HashMap<String, List<List<Object>>>> eachSheetTestData = new HashMap<>();
 
+
     /**
      * Retrieves data from a specified Google Sheet and organizes it into header and test data.
      *
@@ -45,7 +46,7 @@ public class DataProviderUtility {
      * @param sheetName The name of the specific sheet within the Google Sheet.
      * @return An array containing header data and test data.
      */
-    public static Object[] getData(String sheetId, String sheetName){
+    public static List<List<Object>> getData(String sheetId, String sheetName){
         if(!eachSheetHeaderData.containsKey(sheetId) || !eachSheetHeaderData.get(sheetId).containsKey(sheetName)){
             List<List<Object>> testData = GoogleSheet.getData(sheetId, sheetName);
             setHeaderData(testData.get(0), sheetId,sheetName, !eachSheetHeaderData.containsKey(sheetId));
@@ -53,7 +54,7 @@ public class DataProviderUtility {
                 put(sheetName, testData.subList(1, testData.size()));
             }});
         }
-        return new Object[]{eachSheetHeaderData.get(sheetId).get(sheetName), eachSheetTestData.get(sheetId).get(sheetName)};
+        return eachSheetTestData.get(sheetId).get(sheetName);
     }
 
     /**
@@ -87,6 +88,22 @@ public class DataProviderUtility {
                         .map(obj -> obj != null ? obj.toString() : "")
                         .collect(Collectors.toList()))
                 .collect(Collectors.toCollection(HashSet::new));
+    }
+
+    /**
+     * Retrieves the header data for a specific sheet identified by its sheet ID and name.
+     * This method looks up the header data from a pre-populated map containing the headers
+     * of various sheets. It's assumed that the map is already populated with the necessary data.
+     *
+     * @param sheetId The unique identifier of the sheet.
+     * @param sheetName The name of the sheet.
+     * @return A {@link HashMap} where keys are the header names (as {@link String}) and values are
+     *         their corresponding column indices (as {@link Integer}). Returns {@code null} if no data
+     *         is found for the specified sheet ID and name.
+     * @throws NullPointerException if the sheet ID or name is not found in the header data map.
+     */
+    public static HashMap<String, Integer> getSheetHeader(String sheetId, String sheetName){
+        return eachSheetHeaderData.get(sheetId).get(sheetName);
     }
 
     /**

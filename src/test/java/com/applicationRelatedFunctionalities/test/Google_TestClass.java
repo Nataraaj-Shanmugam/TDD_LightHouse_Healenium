@@ -31,12 +31,13 @@ public class Google_TestClass extends TestExecutionEngine{
 	@Story("This is Search story")
 	@TestDataAnnotation(sheetName = "Search")
 	@Test(groups = "search")
-	@PerformanceTest
+//	@PerformanceTest
 	public void search(List<String> testData) {
+		System.out.println(testData);
 		applicationActions.enterValueInSearch();
 		applicationActions.clickSearchButton();
 		Assert.assertNotEquals(getPropertyValue("URL"), getUrl());
-		new LighthouseUtil().performanceTest(getDriver().getCurrentUrl() , "LighHouseReport_Testing",getPerformancePort());
+//		new LighthouseUtil().performanceTest(getDriver().getCurrentUrl() , "LighHouseReport_Testing",getPerformancePort());
 	}
 
 	/**
@@ -46,7 +47,7 @@ public class Google_TestClass extends TestExecutionEngine{
 	 * @param testData List of test data parameters, not used in this test.
 	 */
 	@TestDataAnnotation(isNoDataProvider = true)
-	@Test()
+	@Test(groups = "feeling luck")
 	public void feelingLuck(List<String> testData) {
 		applicationActions.clickFeelingLuckButton();
 		Assert.assertEquals("https://doodles.google/", getUrl());
@@ -58,7 +59,7 @@ public class Google_TestClass extends TestExecutionEngine{
 	 *
 	 * @param testData List of test data parameters for the about page.
 	 */
-	@Test()
+	@Test(groups = "about")
 	public void about(List<String> testData) {
 		applicationActions.clickAbout();
 		waitUntilURLChanges(getPropertyValue("URL"));

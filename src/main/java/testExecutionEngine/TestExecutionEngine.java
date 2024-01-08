@@ -11,6 +11,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -41,9 +42,13 @@ public class TestExecutionEngine extends GenericKeywords {
 	 * @param testMethod The test method to be executed.
 	 * @param testData   The test data to be used in the test method.
 	 */
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void beforeMethod(Method testMethod, Object[] testData) {
 		ThreadLocalFunctionalities.scenarioTestData.set((List<String>) testData[0]);
+		if(testMethod.isAnnotationPresent(TestDataAnnotation.class) && !testMethod.getAnnotation(TestDataAnnotation.class).isNoDataProvider()){
+			TestDataAnnotation testDataAnnotation = testMethod.getAnnotation(TestDataAnnotation.class);
+			ThreadLocalFunctionalities.scenarioColumnNumber.set(DataProviderUtility.getSheetHeader(Objects.equals(testDataAnnotation.sheetId(), "") ? getPropertyValue("sheetId") : testDataAnnotation.sheetId() , testDataAnnotation.sheetName()));
+		}
 		genericKeywords.openBrowser(testMethod.isAnnotationPresent(PerformanceTest.class));
 	}
 
@@ -52,7 +57,7 @@ public class TestExecutionEngine extends GenericKeywords {
 	 *
 	 * @param result The result of the test execution, providing the status of the test.
 	 */
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void afterMethod(ITestResult result) {
 		if (result.getStatus() == ITestResult.SUCCESS)
 			ReporterUtilities.updateTestStatus(Status.PASSED);
@@ -71,18 +76,16 @@ public class TestExecutionEngine extends GenericKeywords {
 	 * @param testMethod The test method requesting the data.
 	 * @return An array of test data and browser combinations.
 	 */
-	@DataProvider(name = "customDataProvider")
+	@DataProvider(name = "customDataProvider", parallel = true)
 	public Object[] customDataProvider(Method testMethod) {
 		TestDataAnnotation testDataAnnotation = testMethod.getAnnotation(TestDataAnnotation.class);
 		String sheetId;
 		if (testDataAnnotation.sheetId().isEmpty()) sheetId = getPropertyValue("sheetId");
 		else sheetId = testDataAnnotation.sheetId();
-		Object[] sheetData = DataProviderUtility.getData(sheetId, testDataAnnotation.sheetName());
-		ThreadLocalFunctionalities.scenarioColumnNumber.set((HashMap<String, Integer>) sheetData[0]);
 		List<List<Object>> testData = new ArrayList<>();
 		List<Object> temp;
 		HashSet<List<String>> browserCombination = DataProviderUtility.getBrowserDetails();
-		for (List<Object> each : ((List<List<Object>>) sheetData[1])) {
+		for (List<Object> each : DataProviderUtility.getData(sheetId, testDataAnnotation.sheetName())) {
 			for (List<String> eachBrowser : browserCombination) {
 				temp = new ArrayList<>(each);
 				temp.addAll(eachBrowser);
@@ -98,7 +101,7 @@ public class TestExecutionEngine extends GenericKeywords {
 	 *
 	 * @return An iterator over an array of browser details.
 	 */
-	@DataProvider(name = "noDataProvider")
+	@DataProvider(name = "noDataProvider", parallel = true)
 	public Iterator<Object[]> noDataProvider() {
 		return DataProviderUtility.getBrowserDetails().stream().map(array -> new Object[]{array}).iterator();
 	}
