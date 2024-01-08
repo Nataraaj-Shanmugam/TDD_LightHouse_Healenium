@@ -8,8 +8,8 @@
         <groups>
             <run>
 <!--                <include name="search"/>-->
-<!--                <include name="feeling luck"/>-->
-                <include name="about"/>
+                <include name="feeling luck"/>
+<!--                <include name="about"/>-->
             </run>
         </groups>
         <classes>
